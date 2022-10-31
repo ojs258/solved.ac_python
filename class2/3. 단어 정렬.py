@@ -1,11 +1,15 @@
 import sys
 
-from numpy import sort
-
 tmp = []
-for i in range(int(sys.stdin.readline())):
+words = []
+for _ in range(int(sys.stdin.readline())):
     a = sys.stdin.readline().rstrip('\n')
-    tmp.append([len(a),a])
+    tmp.append(a)
 
-set(tmp)
-print(sorted(tmp, key= lambda x:(x[0], x[1])))
+tmp = list(set(tmp))
+
+for i in tmp:
+    words.append([i,len(i)])
+
+for i in sorted(words, key= lambda x: (x[1], x[0])):
+    print(i[0])
