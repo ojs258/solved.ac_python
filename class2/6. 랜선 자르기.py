@@ -6,5 +6,18 @@ tmp = []
 for i in range(k):
     tmp.append(int(sys.stdin.readline()))
 
-for i in range(k):
-    print(round(tmp[i] / (sum(tmp) // n))) 
+lo = 1
+hi = max(tmp)
+
+while lo <= hi:
+    mid = (lo + hi) // 2
+    lan = 0
+
+    for i in tmp:
+        lan += i // mid
+
+    if lan >= n:
+        lo = mid + 1
+    else:
+        hi = mid - 1
+print(hi)
