@@ -1,0 +1,6 @@
+def gcd(a,b):
+    tmp = a % b
+    if tmp == 0:
+        return b
+    else:
+        gcd(b,tmp)

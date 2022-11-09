@@ -1,0 +1,5 @@
+
+문자열로 각 자리수로 분해해서
+map함수로 int형으로 변환해서 저장해준다.
+
+ex) list(map(int,str(sys.stdin.readline())))
