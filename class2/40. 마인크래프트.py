@@ -1,25 +1,31 @@
-import sys, math
+from collections import Counter
+import sys
 
 n, m, b = map(int,sys.stdin.readline().split())
 
 dirt = []
-ans = sys.maxsize
-flo = 0
 for i in range(n):
-    for j in map(int,sys.stdin.readline().split()):
-        dirt.append(j)
+        for j in map(int,sys.stdin.readline().split()):
+            dirt.append(j)
 
-for tg in range(257):
-    maxt = 0; mint = 0
-    
-    for i in dirt:
-        if i >= tg:
-            maxt += i - tg
-        else:
-            mint += tg - i
+height, time = 0, sys.maxsize
+
+min_h = min(dirt)
+max_h = max(dirt)
+hap = sum(dirt)
+dirt = dict(Counter(dirt))
+
+for i in range(min_h, max_h+1):
+    if hap + b >= i * n * m:
+        ctime = 0
+        for key in dirt:
+            if key > i:
+                ctime += (key - i) * dirt[key] * 2
+            else:
+                ctime += (i - key) * dirt[key]
         
-    if maxt + b >= mint:
-        if mint + (maxt * 2) <= ans:
-            ans = mint + (maxt * 2)
-            flo = tg
-print(ans,flo)
+        if ctime <= time:
+            time = ctime
+            height = i
+
+print(time, height)
