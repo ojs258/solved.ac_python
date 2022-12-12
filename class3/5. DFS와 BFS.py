@@ -1,18 +1,6 @@
 import sys
-from collections import deque
 
-def bfs(graph,root):
-    visit = []
-    que = deque([root])
-
-    while que:
-        n = que.popleft()
-        if n not in visit:
-            visit.append(n)
-            que += graph[n]-set(visit)
-    return visit
-
-def dfs(graph,root):
+def dfs(graph, root):
     visit = []
     stk = [root]
 
@@ -20,26 +8,41 @@ def dfs(graph,root):
         n = stk.pop()
         if n not in visit:
             visit.append(n)
-            stk += graph[n]-set(visit)
-    return visit        
+            tmp = sorted(set(graph[n]) - set(visit), reverse= True)
+            stk += tmp
+    return visit
 
-n, m, v = map(int,sys.stdin.readline().split())
+def bfs(graph, root):
+    visit = []
+    stk = [root]
+
+    while stk:
+        n = stk.pop(0)
+        if n not in visit:
+            visit.append(n)
+            stk += set(graph[n]) - set(visit)
+    return visit
+
+point, line, start = map(int,sys.stdin.readline().split())
+
+line_info = list(list(map(int,sys.stdin.readline().split()))
+for _ in range(line))
+
+line_info = sorted(line_info)
 tmp = []
 graph = {}
-cnt = 0
-for _ in range(m):
-    a, b = map(int,sys.stdin.readline().split())
-    tmp.append([a,b])
+for i in range(1,1001):
+    for j in range(line):
+        if i == line_info[j][0]:
+            tmp.append(line_info[j][1])
+        elif i == line_info[j][1]:
+            tmp.append(line_info[j][0])
+    if tmp:
+        graph[i] = set(tmp)
+    tmp = []
 
-cond = len(tmp)
-while cnt < cond-1:
-    if tmp[cnt][0] == tmp[cnt+1][0]:
-        tmp[cnt].append(tmp[cnt+1][1])
-        tmp.remove(tmp[cnt+1])
-    else:
-        cnt += 1
-    cond = len(tmp)
-for i in tmp:
-    graph[i[0]] = set(list(i[1:]))
-
-print(dfs(graph,v), dfs(graph,v), sep='\n')
+for i in dfs(graph,start):
+    print(i,end=" ")
+print()
+for i in bfs(graph,start):
+    print(i,end=" ")
