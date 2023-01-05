@@ -8,8 +8,8 @@ for i in range(1,n+1):
     dic2[tmp] = i
 
 for i in range(m):
-    tmp = sys.stdin.readline()
-    if tmp.isdigit():
-        print(dic1.get(int(tmp)))
+    search = sys.stdin.readline().rstrip('\n')
+    if search.isdigit():
+        print(dic1.get(int(search)))
     else:
-        print(dic2.get(tmp))
+        print(dic2.get(search))
