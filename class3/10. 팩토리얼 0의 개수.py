@@ -1,19 +1,21 @@
 import sys
-
-def fac(n):
-    if n == 1:
-        return 1
-    else:
-        return n * fac(n - 1) 
-
-n = int(sys.stdin.readline())
+from math import factorial
 sys.setrecursionlimit(10**7)
 
-tmp = fac(n)
+n = int(sys.stdin.readline())
+
+
+tmp1 = factorial(n)
 ans = 0
-while tmp % 10 == 0:
-    if tmp == 0:
-        print(1)
-    tmp //= 10
+
+tmp2 = list(str(tmp1))
+tmp2.reverse()
+for i in tmp2:
+    if i != '0':
+        break
     ans += 1
-print(ans)
+
+if n == 0:
+    print(1)
+else:
+    print(ans)
